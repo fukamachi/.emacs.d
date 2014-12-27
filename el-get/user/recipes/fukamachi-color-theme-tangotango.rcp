@@ -1,0 +1,6 @@
+(:name fukamachi-color-theme-tangotango
+       :depends color-theme
+       :type github
+       :description "Personal fork of color-theme-tangotango, an Emacs color theme"
+       :pkgname "fukamachi/color-theme-tangotango"
+       :load "color-theme-tangotango.el")

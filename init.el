@@ -43,4 +43,7 @@
       (list (expand-file-name "recipes" *el-get-directory*)
             (expand-file-name "el-get/user/recipes" *emacs-config-directory*)))
 
+(setq el-get-user-package-directory
+      (expand-file-name "el-get/user/init-files" *emacs-config-directory*))
+
 (el-get 'sync)
