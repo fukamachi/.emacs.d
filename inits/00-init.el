@@ -18,6 +18,11 @@
 ;; Prevent omitting a long nested list.
 (setq eval-expression-print-level nil)
 
+;; exec-path
+(loop for x in (reverse
+                (split-string (substring (shell-command-to-string "echo $PATH") 0 -1) ":"))
+      do (add-to-list 'exec-path x))
+
 ;; Don't kill *scratch*
 (defun unkillable-scratch-buffer ()
   (if (string= (buffer-name (current-buffer)) "*scratch*")
