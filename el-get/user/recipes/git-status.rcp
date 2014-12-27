@@ -1,4 +1,4 @@
 (:name git-status
-       :type git
+       :type http
        :website "https://gist.github.com/mori-dev/546654"
-       :url "https://gist.github.com/mori-dev/546654.git")
+       :url "https://gist.githubusercontent.com/mori-dev/546654/raw/24a02df656e9063d00197b37d8c7eb574f2aec83/git-status.el")
