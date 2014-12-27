@@ -1,3 +1,5 @@
+(defvar *emacs-config-directory* (file-name-directory load-file-name))
+
 (require 'package)
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
@@ -20,22 +22,25 @@
 (setq init-loader-show-log-after-init nil)
 
 (init-loader-load
- (expand-file-name "inits/" (file-name-directory load-file-name)))
+ (expand-file-name "inits/" *emacs-config-directory*))
 
 ;; el-get
 (defvar *el-get-directory*
-  (expand-file-name "el-get/el-get" (file-name-directory load-file-name)))
-
-(unless (file-exists-p *el-get-directory*)
-  (let ((buffer (url-retrieve-synchronously
-                 "https://raw.githubusercontent.com/dimitri/el-get/master/el-get-install.el")))
-    (save-excursion
-      (set-buffer buffer)
-      (goto-char (point-max))
-      (eval-print-last-sexp))))
+  (expand-file-name "el-get/el-get" *emacs-config-directory*))
 
 (add-to-list 'load-path *el-get-directory*)
+
+(unless (require 'el-get nil t)
+  (with-current-buffer
+      (url-retrieve-synchronously
+       "https://raw.githubusercontent.com/dimitri/el-get/master/el-get-install.el")
+    (goto-char (point-max))
+    (eval-print-last-sexp)))
+
 (require 'el-get)
-(add-to-list 'el-get-recipe-path
-             (expand-file-name "recipes" *el-get-directory*))
+
+(setq el-get-recipe-path
+      (list (expand-file-name "recipes" *el-get-directory*)
+            (expand-file-name "el-get/user/recipes" *emacs-config-directory*)))
+
 (el-get 'sync)

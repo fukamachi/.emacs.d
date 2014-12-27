@@ -5,7 +5,6 @@
   (load (expand-file-name "~/.roswell/impls/ALL/ALL/quicklisp/slime-helper.el")))
  (T (require-or-install 'slime)))
 
-(require 'slime)
 (require 'slime-autoloads)
 
 (setq slime-default-lisp 'sbcl)
@@ -23,12 +22,21 @@
             (define-key slime-scratch-mode-map (kbd "C-n") 'slime-eval-print-last-expression)
             (define-key slime-scratch-mode-map (kbd "C-j") 'next-line)))
 (setq slime-autodoc-use-multiline-p t)
+
 (setq slime-contribs
-      '(slime-repl slime-fancy slime-banner slime-indentation))
+      '(slime-fancy slime-banner slime-indentation))
 (slime-setup slime-contribs)
 
+(add-hook 'slime-repl-mode-hook
+          (lambda ()
+            (el-get 'sync 'slime-repl-ansi-color)
+            (slime-setup '(slime-repl-ansi-color))))
+
 (require-or-install 'ac-slime)
-(add-hook 'slime-repl-mode-hook (lambda () (interactive) (set-up-slime-ac)))
+(add-hook 'slime-mode-hook 'set-up-slime-ac)
+(add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
+(eval-after-load "auto-complete"
+  '(add-to-list 'ac-modes 'slime-repl-mode))
 
 (modify-syntax-entry ?\[ "(]" lisp-mode-syntax-table)
 (modify-syntax-entry ?\] ")[" lisp-mode-syntax-table)
