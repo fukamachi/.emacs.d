@@ -16,6 +16,20 @@
   (set-face-attribute 'default nil :height
                       (- (face-attribute 'default :height) 10)))
 
+(defvar maxframe-fullscreen-p nil)
+
+(defun toggle-fullscreen ()
+  (interactive)
+  (cond
+    ((and (mac-os-p) (< emacs-major-version 24)) (ns-toggle-fullscreen))
+    ((and (mac-os-p) (require-or-install 'maxframe))
+     (if maxframe-fullscreen-p (restore-frame) (maximize-frame))
+     (setq maxframe-fullscreen-p (not maxframe-fullscreen-p)))
+    (t
+     (if (frame-parameter nil 'fullscreen)
+         (set-frame-parameter nil 'fullscreen nil)
+         (set-frame-parameter nil 'fullscreen 'fullboth)))))
+
 (defun define-keys (&optional mode)
   (loop for (key . fn) in `(("\C-h" . backward-char)
                             ("\C-j" . next-line)
@@ -27,7 +41,8 @@
                             ("\C-b" . anything-previous-page)
                             ("\M-s" . query-replace-regexp)
                             (,(kbd "C--") . font-small)
-                            (,(kbd "C-+") . font-big))
+                            (,(kbd "C-+") . font-big)
+                            (,(kbd "C-c m") . toggle-fullscreen))
         if mode do (define-key mode key fn)
         else do (global-set-key key fn)))
 
