@@ -6,6 +6,8 @@
   (setq x-super-keysym 'meta)
   (setq x-meta-keysym 'super))
 
+(define-key global-map (kbd "RET") 'newline-and-indent)
+
 (defun font-big ()
   (interactive)
   (set-face-attribute 'default nil :height

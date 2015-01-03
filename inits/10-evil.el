@@ -6,7 +6,6 @@
 (define-key evil-insert-state-map (kbd "C-k") 'previous-line)
 (define-key evil-insert-state-map (kbd "C-j") 'next-line)
 (define-key evil-insert-state-map (kbd "C-d") 'delete-char)
-(define-key evil-insert-state-map (kbd "<return>") 'evil-ret-and-indent)
 
 (define-key evil-normal-state-map "D"
   (lambda ()
