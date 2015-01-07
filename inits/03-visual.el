@@ -15,10 +15,6 @@
 
 (global-whitespace-mode 1)
 
-(add-hook 'cperl-mode-hook
-          (lambda ()
-            (font-lock-add-keywords nil '(("\\(throw\\|render\\)" 1 font-lock-keyword-face t)))))
-
 (defface hlline-face
   '((((class color)
       (background dark))
@@ -49,3 +45,19 @@
   (menu-bar-mode -1)
   (tool-bar-mode -1)
   (toggle-scroll-bar nil))
+
+;;
+;; Japanese font
+
+(defun set-jp-font (font)
+  (when (display-graphic-p)
+    (set-fontset-font
+     (frame-parameter nil 'font)
+     'japanese-jisx0208
+     `(,font . "iso10646-1"))))
+
+(add-hook 'window-setup-hook
+          (lambda ()
+            (custom-set-faces
+             '(default ((t (:height 120 :family "Menlo")))))
+            (set-jp-font "Hiragino Maru Gothic Pro")))
