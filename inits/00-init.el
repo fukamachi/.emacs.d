@@ -15,6 +15,9 @@
         (kill-line))
     ad-do-it))
 
+(defmacro appendf (list &rest lists)
+  `(setq ,list (append ,list ,@lists)))
+
 ;; Prevent omitting a long nested list.
 (setq eval-expression-print-level nil)
 
