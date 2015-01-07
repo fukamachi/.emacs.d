@@ -6,6 +6,12 @@
 (define-key evil-insert-state-map (kbd "C-k") 'previous-line)
 (define-key evil-insert-state-map (kbd "C-j") 'next-line)
 (define-key evil-insert-state-map (kbd "C-d") 'delete-char)
+(define-key evil-insert-state-map (kbd "C-w") 'kill-region)
+
+(defadvice kill-region (around kill-word-or-kill-region activate)
+  (if (and (interactive-p) transient-mark-mode (not mark-active))
+      (backward-kill-word 1)
+    ad-do-it))
 
 (define-key evil-normal-state-map "D"
   (lambda ()
