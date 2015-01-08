@@ -56,8 +56,9 @@
      'japanese-jisx0208
      `(,font . "iso10646-1"))))
 
-(add-hook 'window-setup-hook
-          (lambda ()
-            (custom-set-faces
-             '(default ((t (:height 120 :family "Menlo")))))
-            (set-jp-font "Hiragino Maru Gothic Pro")))
+(when (mac-os-p)
+  (add-hook 'window-setup-hook
+            (lambda ()
+              (custom-set-faces
+               '(default ((t (:height 120 :family "Menlo")))))
+              (set-jp-font "Hiragino Maru Gothic Pro"))))
