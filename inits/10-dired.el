@@ -5,3 +5,5 @@
 
 (require-or-install 'direx)
 (global-set-key (kbd "C-x C-j") 'direx:jump-to-directory-other-window)
+
+(evil-declare-key 'normal direx:direx-mode-map (kbd "RET") 'direx:maybe-find-item)
