@@ -5,12 +5,3 @@
 (add-hook 'paredit-mode-hook
           (lambda ()
             (define-key paredit-mode-map (kbd "M-r") 'anything-for-files)))
-
-
-
-
-
-
-
-
-
