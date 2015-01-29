@@ -25,9 +25,6 @@
             (define-key slime-repl-mode-map (kbd "M-r") 'anything-for-files)))
 (setq slime-autodoc-use-multiline-p t)
 
-(require 'cl-indent)
-(setq lisp-indent-function 'common-lisp-indent-function)
-
 (setq slime-contribs
       '(slime-fancy slime-banner slime-indentation))
 (slime-setup slime-contribs)
