@@ -17,16 +17,15 @@
               (save-excursion (slime)))
             (global-set-key (kbd "C-c s") 'slime-selector)
             (define-key slime-scratch-mode-map (kbd "C-n") 'slime-eval-print-last-expression)
-            (define-key slime-scratch-mode-map (kbd "C-j") 'next-line)))
+            (define-key slime-scratch-mode-map (kbd "C-j") 'next-line)
+            (load-library "cl-indent")
+            (setq lisp-indent-function 'common-lisp-indent-function)))
 (add-hook 'slime-repl-mode-hook
           (lambda ()
             (define-key slime-repl-mode-map (kbd "C-n") 'slime-repl-newline-and-indent)
             (define-key slime-repl-mode-map (kbd "C-j") 'next-line)
             (define-key slime-repl-mode-map (kbd "M-r") 'anything-for-files)))
 (setq slime-autodoc-use-multiline-p t)
-
-(require 'cl-indent)
-(setq lisp-indent-function 'common-lisp-indent-function)
 
 (setq slime-contribs
       '(slime-fancy slime-banner slime-indentation))
