@@ -17,4 +17,5 @@
                 ("*slime-xref*")
                 (slime-connection-list-mode)
                 (sldb-mode :height 20 :stick t)
-                (direx:direx-mode :position left :width 25 :dedicated t))))
+                (direx:direx-mode :position left :width 25 :dedicated t)
+                ("*quickrun*"))))
