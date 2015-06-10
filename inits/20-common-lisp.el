@@ -9,8 +9,8 @@
 
 (setq slime-default-lisp 'sbcl)
 (setq slime-lisp-implementations
-      `((sbcl ("ros" "+R" "-l" "~/.sbclrc" "-Q" "run") :coding-system utf-8-unix)
-        (ccl ("ccl") :coding-system utf-8-unix)))
+      `((sbcl ("ros" "-L" "sbcl" "-Q" "run") :coding-system utf-8-unix)
+        (ccl ("ros" "-L" "ccl-bin" "-Q" "run") :coding-system utf-8-unix)))
 (add-hook 'slime-mode-hook
           (lambda ()
             (unless (slime-connected-p)
