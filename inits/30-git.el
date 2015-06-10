@@ -1,11 +1,3 @@
-(add-hook 'server-vist-hook
-          (lambda ()
-            (when (string-match "COMMIT_EDITMSG" buffer-file-name)
-              (set-buffer-file-coding-system 'utf-8))))
-
-(el-get 'sync 'git-status)
-(require 'git-status)
-
 (defun git-blame-current-line ()
   (interactive)
   (let ((blame-result
@@ -28,3 +20,10 @@
              (format-time-string "%Y/%m/%d %H:%M"
                                  (seconds-to-time
                                   (string-to-number (gethash "author-time" result))))))))
+(add-hook 'server-vist-hook
+          (lambda ()
+            (when (string-match "COMMIT_EDITMSG" buffer-file-name)
+              (set-buffer-file-coding-system 'utf-8))))
+
+(el-get 'sync 'git-status)
+(require 'git-status)
