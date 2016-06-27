@@ -3,7 +3,6 @@
 (require 'package)
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
-(package-initialize)
 
 (defun package-install-with-refresh (package)
   (unless (assq package package-alist)
@@ -16,13 +15,6 @@
       (progn
        (package-install-with-refresh package)
        (require package))))
-
-(require-or-install 'init-loader)
-
-(setq init-loader-show-log-after-init nil)
-
-(init-loader-load
- (expand-file-name "inits/" *emacs-config-directory*))
 
 ;; el-get
 (defvar *el-get-directory*
@@ -47,3 +39,13 @@
       (expand-file-name "el-get/user/init-files" *emacs-config-directory*))
 
 (el-get 'sync)
+
+;; init-loader
+
+(package-initialize)
+(require-or-install 'init-loader)
+
+(setq init-loader-show-log-after-init nil)
+
+(init-loader-load
+ (expand-file-name "inits/" *emacs-config-directory*))

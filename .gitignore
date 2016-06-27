@@ -4,3 +4,5 @@ el-get/*
 !el-get/user/
 elpa
 ac-comphist.dat
+places
+recentf
