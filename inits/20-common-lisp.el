@@ -1,8 +1,8 @@
 (cond
  ((file-exists-p (expand-file-name "~/quicklisp/slime-helper.el"))
   (load (expand-file-name "~/quicklisp/slime-helper.el")))
- ((file-exists-p (expand-file-name "~/.roswell/impls/ALL/ALL/quicklisp/slime-helper.el"))
-  (load (expand-file-name "~/.roswell/impls/ALL/ALL/quicklisp/slime-helper.el")))
+ ((file-exists-p (expand-file-name "~/.roswell/lisp/quicklisp/slime-helper.el"))
+  (load (expand-file-name "~/.roswell/lisp/quicklisp/slime-helper.el")))
  (T (require-or-install 'slime)))
 
 (require 'slime-autoloads)
