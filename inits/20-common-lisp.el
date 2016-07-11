@@ -26,7 +26,7 @@
 (setq slime-autodoc-use-multiline-p t)
 
 (setq slime-contribs
-      '(slime-fancy slime-banner slime-indentation))
+      '(slime-fancy slime-banner slime-indentation slime-repl-ansi-color))
 (slime-setup slime-contribs)
 
 (add-hook 'slime-repl-mode-hook
