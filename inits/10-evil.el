@@ -39,3 +39,7 @@
   '(progn
      (define-key evil-normal-state-map (kbd "M-.") 'slime-edit-definition)
      (define-key evil-normal-state-map (kbd "M-,") 'slime-pop-find-definition-stack)))
+
+(eval-after-load "direx"
+  '(progn
+     (evil-declare-key 'normal direx:direx-mode-map (kbd "RET") 'direx:maybe-find-item)))
