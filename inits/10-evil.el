@@ -28,6 +28,8 @@
       (kill-line))
     (evil-insert 1)))
 
+(define-key evil-insert-state-map (kbd "C-a") 'move-beginning-of-line)
+
 (evil-define-key 'normal paredit-mode ")" 'paredit-forward-up)
 (evil-define-key 'normal paredit-mode "(" 'paredit-backward-up)
 (evil-define-key 'normal paredit-mode (kbd "C-0") 'paredit-backward-down)
