@@ -25,6 +25,7 @@
 (loop for x in (reverse
                 (split-string (substring (shell-command-to-string "echo $PATH") 0 -1) ":"))
       do (add-to-list 'exec-path x))
+(add-to-list 'exec-path "/usr/local/bin")
 
 ;; Don't kill *scratch*
 (defun unkillable-scratch-buffer ()
