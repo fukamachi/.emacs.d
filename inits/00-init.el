@@ -70,3 +70,7 @@
 
 (setq make-backup-files nil)
 (setq auto-save-default nil)
+
+;; auto-install
+(require 'auto-install)
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/auto-install/"))
