@@ -1,5 +1,8 @@
 (show-paren-mode t)
 
+(when (windowsp)
+  (set-default-font "Consolas 12"))
+
 (require-or-install 'whitespace)
 (set-face-foreground 'whitespace-space "DarkGoldenrod1")
 (set-face-background 'whitespace-space nil)
