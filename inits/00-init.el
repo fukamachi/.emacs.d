@@ -1,6 +1,8 @@
 (eval-when-compile
   (require 'cl))
 
+(defun windowsp ()
+  (eq system-type 'windows-nt))
 (defun mac-os-p ()
   ;; (member window-system '(mac ns))
   (eq system-type 'darwin))
