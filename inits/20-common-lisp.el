@@ -70,7 +70,7 @@
       do (add-hook (intern (concat (symbol-name mode) "-hook"))
                    (lambda ()
                      (require-or-install 'paredit)
-                     (paredit-mode t))))
+                     (paredit-mode +1))))
 
 (defun set-pretty-patterns (patterns)
   (loop for (glyph . pairs) in patterns do

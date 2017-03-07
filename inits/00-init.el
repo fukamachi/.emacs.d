@@ -2,7 +2,8 @@
   (require 'cl))
 
 (defun mac-os-p ()
-  (member window-system '(mac ns)))
+  ;; (member window-system '(mac ns))
+  (eq system-type 'darwin))
 (defun linuxp ()
   (eq window-system 'x))
 

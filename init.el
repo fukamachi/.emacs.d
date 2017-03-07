@@ -1,8 +1,8 @@
 (defvar *emacs-config-directory* (file-name-directory load-file-name))
 
 (require 'package)
-;(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-;(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 
 (defun package-install-with-refresh (package)
   (unless (assq package package-alist)

@@ -6,6 +6,7 @@
                             (go-mode . "\\.go$")
                             (yaml-mode . "\\.ya?ml$")
                             (js2-mode . "\\.js$")
+                            (js2-jsx-mode . "\\.jsx$")
                             (coffee-mode . "\\.coffee$")
                             (ruby-mode . "\\.rb$")
                             (org-mode . "\\.org$")
