@@ -6,6 +6,7 @@
  (T (require-or-install 'slime)))
 
 (require 'slime-autoloads)
+(require 'slime-annot nil t)
 
 (setq slime-default-lisp 'sbcl)
 (setq slime-lisp-implementations
