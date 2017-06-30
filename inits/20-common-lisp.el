@@ -41,6 +41,17 @@
 (eval-after-load "auto-complete"
   '(add-to-list 'ac-modes 'slime-repl-mode))
 
+(defun slime-qlot-exec (directory)
+  (interactive (list (read-directory-name "Project directory: ")))
+  (slime-start :program "qlot"
+               :program-args '("exec" "ros" "-S" "." "run")
+               :directory directory
+               :name 'qlot
+               :env (list (concat "PATH="
+                                  (mapconcat 'identity exec-path ":"))
+                          (concat "QUICKLISP_HOME="
+                                  (file-name-as-directory directory) "quicklisp/"))))
+
 (modify-syntax-entry ?\[ "(]" lisp-mode-syntax-table)
 (modify-syntax-entry ?\] ")[" lisp-mode-syntax-table)
 (modify-syntax-entry ?\{ "(}" lisp-mode-syntax-table)
