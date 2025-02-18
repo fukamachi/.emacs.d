@@ -45,15 +45,19 @@
   :config
   (add-hook 'smartparens-enabled-hook 'evil-smartparens-mode))
 
+(defvar *coalton-mode-path*
+  "~/Programs/etc/coalton-mode/")
+
 (use-package slime
   :commands (slime)
   :config
   (setq inferior-lisp-program "ros -L sbcl-bin run")
-  (setq slime-contribs '(slime-fancy slime-coalton))
-  (slime-require :swank-coalton))
+  (when (file-exists-p (expand-file-name "slime-coalton.el" *coalton-mode-path*))
+    (setq slime-contribs '(slime-fancy slime-coalton))
+    (slime-require :swank-coalton)))
 
 (use-package coalton-mode
-  :load-path "~/Programs/etc/coalton-mode/"
+  :load-path *coalton-mode-path*
   :mode (("\\.coal\\'" . coalton-mode))
   :config
   (set-lisp-keybindings coalton-mode-map))
