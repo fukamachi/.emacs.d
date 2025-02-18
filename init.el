@@ -1,5 +1,3 @@
-(load (locate-user-emacs-file "functions.el"))
-
 (setq custom-file (locate-user-emacs-file "custom.el"))
 (load custom-file 'noerror)
 
@@ -16,15 +14,23 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
+(defun set-lisp-keybindings (map)
+  (evil-define-key 'normal map
+    "(" 'sp-backward-up-sexp
+    ")" 'sp-end-of-sexp
+    (kbd "SPC w") 'sp-wrap-round
+    (kbd "SPC i") 'sp-wrap-round
+    (kbd "SPC @") 'sp-splice-sexp
+    (kbd "M-l") 'sp-forward-slurp-sexp
+    (kbd "M-h") 'sp-forward-barf-sexp
+    (kbd "SPC o") 'sp-raise-sexp))
+
 (use-package evil
   :ensure t
   :init
   (setq evil-want-C-u-scroll t)
   :config
   (evil-mode 1)
-  (add-hook 'evil-normal-state-entry-hook  'my-set-cursor-type-for-evil-state)
-  (add-hook 'evil-insert-state-entry-hook  'my-set-cursor-type-for-evil-state)
-  (add-hook 'evil-replace-state-entry-hook 'my-set-cursor-type-for-evil-state)
   (define-key evil-motion-state-map (kbd "C-z") 'suspend-frame))
 
 (use-package smartparens
@@ -44,6 +50,11 @@
   :ensure t
   :config
   (add-hook 'smartparens-enabled-hook 'evil-smartparens-mode))
+
+(use-package evil-terminal-cursor-changer
+  :ensure t
+  :config
+  (evil-terminal-cursor-changer-activate))
 
 (defvar *coalton-mode-path*
   "~/Programs/etc/coalton-mode/")
