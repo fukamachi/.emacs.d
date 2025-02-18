@@ -65,7 +65,10 @@
   (setq inferior-lisp-program "ros -L sbcl-bin run")
   (when (file-exists-p (expand-file-name "slime-coalton.el" *coalton-mode-path*))
     (setq slime-contribs '(slime-fancy slime-coalton))
-    (slime-require :swank-coalton)))
+    (slime-require :swank-coalton))
+
+  (define-key evil-normal-state-map (kbd "M-.") 'slime-edit-definition)
+  (define-key evil-normal-state-map (kbd "M-,") 'slime-pop-find-definition-stack))
 
 (use-package coalton-mode
   :load-path *coalton-mode-path*
