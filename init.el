@@ -44,7 +44,28 @@
   (sp-local-pair 'coalton-mode "'" nil :actions nil)
   (dolist (map (list emacs-lisp-mode-map
                      lisp-mode-map))
-    (set-lisp-keybindings map)))
+    (set-lisp-keybindings map))
+
+  (dolist (mode '(emacs-lisp-mode
+                  lisp-mode
+                  coalton-mode
+                  lisp-interactive-mode))
+    (sp-local-pair mode "(" ")" :post-handlers '(my/insert-spaces-around-parens)) )
+
+  (defun my/insert-spaces-around-parens (&rest _ignored)
+    "Insert spaces around parentheses only when necessary."
+    (save-excursion
+      (backward-char)
+      ;; Check if there's no space before the opening parenthesis
+      (unless (or (bolp) ; Beginning of line
+                  (looking-back "[[:space:]\t\n\(]" 1)) ; Space, tab, or newline before point
+        (insert " "))
+      ;; Move back inside the parentheses
+      (sp-forward-sexp)
+      ;; Check if there's no space after the closing parenthesis
+      (unless (or (eolp) ; End of line
+                  (looking-at "[[:space:]\t\n\)]")) ; Space, tab, or newline after point
+        (insert " ")))))
 
 (use-package evil-smartparens
   :ensure t
