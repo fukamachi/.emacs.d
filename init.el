@@ -90,17 +90,6 @@
   :config
   (evil-terminal-cursor-changer-activate))
 
-(use-package corfu-terminal
-  :ensure t
-  :custom ((corfu-auto t)
-           (corfu-auto-delay 0.5)
-           (corfu-auto-prefix 1)
-           (corfu-cycle t)
-           (tab-always-indent 'complete))
-  :config
-  (corfu-terminal-mode +1)
-  (global-corfu-mode +1))
-
 (defvar *coalton-mode-path*
   "~/Programs/etc/coalton-mode/")
 
@@ -109,7 +98,7 @@
   :config
   (setq inferior-lisp-program "ros -L sbcl-bin run")
   (when (file-exists-p (expand-file-name "slime-coalton.el" *coalton-mode-path*))
-    (setq slime-contribs '(slime-fancy slime-coalton))
+    (setq slime-contribs '(slime-fancy slime-company slime-coalton))
     (slime-require :swank-coalton))
 
   (define-key evil-normal-state-map (kbd "M-.") 'slime-edit-definition)
@@ -117,7 +106,17 @@
   (dolist (hook '(completion-list-mode-hook
                   help-mode-hook
                   slime-repl-mode-hook))
-    (add-hook hook (lambda () (display-line-numbers-mode -1)))))
+    (add-hook hook (lambda ()
+                     (display-line-numbers-mode -1)
+                     (setq show-trailing-whitespace nil)))))
+
+(use-package company
+  :ensure t
+  :init
+  (global-company-mode))
+
+(use-package slime-company
+  :after (slime company))
 
 (use-package coalton-mode
   :load-path *coalton-mode-path*
