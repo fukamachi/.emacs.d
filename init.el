@@ -141,3 +141,12 @@
  '(hl-line ((t (:background "#151515")))))
 
 (global-hl-line-mode 1)
+
+(savehist-mode 1)
+(setq savehist-save-minibuffer-history t
+      savehist-additional-variables
+      '(kill-ring
+        search-ring
+        regexp-search-ring
+        shell-command-history
+        extended-command-history))
