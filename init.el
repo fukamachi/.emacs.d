@@ -113,7 +113,11 @@
     (slime-require :swank-coalton))
 
   (define-key evil-normal-state-map (kbd "M-.") 'slime-edit-definition)
-  (define-key evil-normal-state-map (kbd "M-,") 'slime-pop-find-definition-stack))
+  (define-key evil-normal-state-map (kbd "M-,") 'slime-pop-find-definition-stack)
+  (dolist (hook '(completion-list-mode-hook
+                  help-mode-hook
+                  slime-repl-mode-hook))
+    (add-hook hook (lambda () (display-line-numbers-mode -1)))))
 
 (use-package coalton-mode
   :load-path *coalton-mode-path*
