@@ -55,16 +55,19 @@
     (sp-local-pair "(" ")"
                    :post-handlers '(my/insert-spaces-around-parens)
                    :when '(sp-in-code-p))
+    (sp-local-pair "\"" "\""
+                   :post-handlers '(my/insert-spaces-around-parens))
     (sp-local-pair "'" nil :actions nil))
 
-  (defun my/insert-spaces-around-parens (&rest _ignored)
+  (defun my/insert-spaces-around-parens (id action context)
     "Insert spaces around parentheses only when necessary."
-
-    (when (and (looking-back "(" 1)
-               (not (or (looking-back "'(" 2))
-                    (and (or (derived-mode-p 'lisp-mode)
-                             (derived-mode-p 'coalton-mode))
-                         (or (looking-back "#[+\-](" 3)))))
+    (when (and (equal action 'insert)
+               (not (equal id ")"))
+               (not (and (equal id "(")
+                         (or (looking-back "'(" 2)
+                             (and (or (derived-mode-p 'lisp-mode)
+                                      (derived-mode-p 'coalton-mode))
+                                  (looking-back "#[+\-](" 3))))))
       (save-excursion
         (backward-char)
         ;; Check if there's no space before the opening parenthesis
