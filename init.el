@@ -29,43 +29,53 @@
   :ensure t
   :init
   (setq evil-want-C-u-scroll t)
+  :custom ((evil-want-C-u-scroll t)
+           (evil-undo-system 'undo-redo))
   :config
   (evil-mode 1)
-  (define-key evil-motion-state-map (kbd "C-z") 'suspend-frame))
+  (define-key evil-motion-state-map (kbd "C-z") 'suspend-frame)
+  (define-key evil-insert-state-map (kbd "C-a") 'move-beginning-of-line)
+  (define-key evil-insert-state-map (kbd "C-e") 'move-end-of-line))
 
 (use-package smartparens
   :ensure t
-  :hook ((emacs-lisp-mode lisp-mode coalton-mode) . smartparens-strict-mode)
+  :hook ((emacs-lisp-mode lisp-mode coalton-mode slime-repl-mode) . smartparens-strict-mode)
   :config
+  (smartparens-global-mode)
   (require 'smartparens-config)
 
-  (sp-local-pair 'emacs-lisp-mode "'" nil :actions nil)
-  (sp-local-pair 'lisp-mode "'" nil :actions nil)
-  (sp-local-pair 'coalton-mode "'" nil :actions nil)
   (dolist (map (list emacs-lisp-mode-map
                      lisp-mode-map))
     (set-lisp-keybindings map))
 
-  (dolist (mode '(emacs-lisp-mode
-                  lisp-mode
-                  coalton-mode
-                  lisp-interactive-mode))
-    (sp-local-pair mode "(" ")" :post-handlers '(my/insert-spaces-around-parens)) )
+  (sp-with-modes '(emacs-lisp-mode
+                   lisp-mode
+                   coalton-mode
+                   lisp-interactive-mode)
+    (sp-local-pair "(" ")"
+                   :post-handlers '(my/insert-spaces-around-parens)
+                   :when '(sp-in-code-p))
+    (sp-local-pair "'" nil :actions nil))
 
   (defun my/insert-spaces-around-parens (&rest _ignored)
     "Insert spaces around parentheses only when necessary."
-    (save-excursion
-      (backward-char)
-      ;; Check if there's no space before the opening parenthesis
-      (unless (or (bolp) ; Beginning of line
-                  (looking-back "[[:space:]\t\n\(]" 1)) ; Space, tab, or newline before point
-        (insert " "))
-      ;; Move back inside the parentheses
-      (sp-forward-sexp)
-      ;; Check if there's no space after the closing parenthesis
-      (unless (or (eolp) ; End of line
-                  (looking-at "[[:space:]\t\n\)]")) ; Space, tab, or newline after point
-        (insert " ")))))
+
+    (when (and (looking-back "(" 1)
+               (not (or (looking-back "'(" 2))
+                    (and (or (derived-mode-p 'lisp-mode)
+                             (derived-mode-p 'coalton-mode))
+                         (or (looking-back "#[+\-](" 3)))))
+      (save-excursion
+        (backward-char)
+        ;; Check if there's no space before the opening parenthesis
+        (unless (or (bolp)
+                    (looking-back "[[:space:]\t\n\(]" 1))
+          (insert " "))
+        (sp-forward-sexp)
+        ;; Check if there's no space after the closing parenthesis
+        (unless (or (eolp)
+                    (looking-at "[[:space:]\t\n\)]"))
+          (insert " "))))))
 
 (use-package evil-smartparens
   :ensure t
@@ -76,6 +86,17 @@
   :ensure t
   :config
   (evil-terminal-cursor-changer-activate))
+
+(use-package corfu-terminal
+  :ensure t
+  :custom ((corfu-auto t)
+           (corfu-auto-delay 0.5)
+           (corfu-auto-prefix 1)
+           (corfu-cycle t)
+           (tab-always-indent 'complete))
+  :config
+  (corfu-terminal-mode +1)
+  (global-corfu-mode +1))
 
 (defvar *coalton-mode-path*
   "~/Programs/etc/coalton-mode/")
@@ -104,3 +125,16 @@
                '((coalton-mode) . ("localhost" 7887))))
 
 (fset 'yes-or-no-p 'y-or-n-p)
+
+(menu-bar-mode -1)
+(global-display-line-numbers-mode)
+
+(setq-default indent-tabs-mode nil
+              tab-width 2)
+
+(setq-default show-trailing-whitespace t)
+
+(custom-set-faces
+ '(hl-line ((t (:background "#151515")))))
+
+(global-hl-line-mode 1)
