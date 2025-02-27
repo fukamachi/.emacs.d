@@ -99,6 +99,7 @@
   (setq inferior-lisp-program "ros -L sbcl-bin run")
   (when (file-exists-p (expand-file-name "slime-coalton.el" *coalton-mode-path*))
     (setq slime-contribs '(slime-fancy slime-company slime-coalton))
+    ;; XXX: This raises an error when M-x slime-connect.
     (slime-require :swank-coalton))
 
   (define-key evil-normal-state-map (kbd "M-.") 'slime-edit-definition)
@@ -108,7 +109,12 @@
                   slime-repl-mode-hook))
     (add-hook hook (lambda ()
                      (display-line-numbers-mode -1)
-                     (setq show-trailing-whitespace nil)))))
+                     (setq show-trailing-whitespace nil))))
+
+  (add-hook 'slime-repl-mode-hook
+            (lambda ()
+              (evil-define-key 'normal slime-repl-mode-map
+                (kbd "RET") 'slime-repl-return))))
 
 (use-package company
   :ensure t
