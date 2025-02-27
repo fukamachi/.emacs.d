@@ -64,7 +64,8 @@
     (when (and (equal action 'insert)
                (not (equal id ")"))
                (not (and (equal id "(")
-                         (or (looking-back "'(" 2)
+                         (or (looking-back "[`',](" 2)
+                             (looking-back ",@(" 3)
                              (and (or (derived-mode-p 'lisp-mode)
                                       (derived-mode-p 'coalton-mode))
                                   (looking-back "#[+\-](" 3))))))
@@ -97,8 +98,10 @@
   :commands (slime)
   :config
   (setq inferior-lisp-program "ros -L sbcl-bin run")
-  (when (file-exists-p (expand-file-name "slime-coalton.el" *coalton-mode-path*))
-    (setq slime-contribs '(slime-fancy slime-company slime-coalton)))
+  (setq slime-contribs
+        `(slime-fancy slime-company
+                      ,@(and (file-exists-p (expand-file-name "slime-coalton.el" *coalton-mode-path*))
+                             '(slime-coalton))))
 
   (define-key evil-normal-state-map (kbd "M-.") 'slime-edit-definition)
   (define-key evil-normal-state-map (kbd "M-,") 'slime-pop-find-definition-stack)
