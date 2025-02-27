@@ -98,9 +98,7 @@
   :config
   (setq inferior-lisp-program "ros -L sbcl-bin run")
   (when (file-exists-p (expand-file-name "slime-coalton.el" *coalton-mode-path*))
-    (setq slime-contribs '(slime-fancy slime-company slime-coalton))
-    ;; XXX: This raises an error when M-x slime-connect.
-    (slime-require :swank-coalton))
+    (setq slime-contribs '(slime-fancy slime-company slime-coalton)))
 
   (define-key evil-normal-state-map (kbd "M-.") 'slime-edit-definition)
   (define-key evil-normal-state-map (kbd "M-,") 'slime-pop-find-definition-stack)
