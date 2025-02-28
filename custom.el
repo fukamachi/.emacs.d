@@ -8,7 +8,7 @@
  '(auto-save-visited-mode t)
  '(make-backup-files nil)
  '(package-selected-packages
-   '(slime-company company evil-terminal-cursor-changer evil-smartparens smartparens slime evil eglot-inactive-regions))
+   '(polymode slime-company company evil-terminal-cursor-changer evil-smartparens smartparens slime evil eglot-inactive-regions))
  '(ring-bell-function 'ignore)
  '(scroll-conservatively 35)
  '(scroll-margin 0)

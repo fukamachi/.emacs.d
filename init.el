@@ -129,9 +129,13 @@
   (add-to-list 'company-backends 'company-slime)
   (add-to-list 'slime-company-major-modes 'coalton-mode))
 
+(use-package polymode
+  :ensure t)
+
 (use-package coalton-mode
   :load-path *coalton-mode-path*
-  :mode (("\\.coal\\'" . coalton-mode))
+  :mode (("\\.coal\\'" . coalton-mode)
+         ("\\.lisp\\'" . poly-lisp-coalton-mode))
   :config
   (set-lisp-keybindings coalton-mode-map))
 
