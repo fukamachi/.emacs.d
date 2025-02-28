@@ -120,10 +120,14 @@
 (use-package company
   :ensure t
   :init
+  (setq company-minimum-prefix-length 1)
   (global-company-mode))
 
 (use-package slime-company
-  :after (slime company))
+  :after (slime company)
+  :config
+  (add-to-list 'company-backends 'company-slime)
+  (add-to-list 'slime-company-major-modes 'coalton-mode))
 
 (use-package coalton-mode
   :load-path *coalton-mode-path*
