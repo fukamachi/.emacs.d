@@ -119,8 +119,18 @@
 
 (use-package company
   :ensure t
-  :init
+  :config
+  (setq company-selection-default nil)
   (setq company-minimum-prefix-length 1)
+
+  (defun my-company-return ()
+    (interactive)
+    (if company-selection
+        (company-complete-selection)
+      (newline-and-indent)))
+
+  (define-key company-active-map (kbd "RET") #'my-company-return)
+
   (global-company-mode))
 
 (use-package slime-company
