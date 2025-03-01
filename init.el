@@ -178,3 +178,6 @@
         regexp-search-ring
         shell-command-history
         extended-command-history))
+
+(define-key key-translation-map (kbd "M-:") (kbd "M-;"))
+(define-key key-translation-map (kbd "M-;") (kbd "M-:"))
