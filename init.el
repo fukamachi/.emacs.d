@@ -127,7 +127,10 @@
     (interactive)
     (if company-selection
         (company-complete-selection)
-      (newline-and-indent)))
+      (let ((default-return (key-binding (kbd "RET"))))
+        (if default-return
+            (call-interactively default-return)
+          (newline-and-indent)))))
 
   (define-key company-active-map (kbd "RET") #'my-company-return)
 
