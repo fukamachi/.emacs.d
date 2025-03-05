@@ -98,10 +98,9 @@
   :commands (slime)
   :config
   (setq inferior-lisp-program "ros -L sbcl-bin run")
-  (setq slime-contribs
-        `(slime-fancy slime-company
-                      ,@(and (file-exists-p (expand-file-name "slime-coalton.el" *coalton-mode-path*))
-                             '(slime-coalton))))
+  (setq slime-contribs '(slime-fancy slime-company))
+  (when (require 'slime-coalton nil t)
+    (slime-coalton-init))
 
   (define-key evil-normal-state-map (kbd "M-.") 'slime-edit-definition)
   (define-key evil-normal-state-map (kbd "M-,") 'slime-pop-find-definition-stack)
@@ -172,6 +171,12 @@
  '(hl-line ((t (:background "#151515")))))
 
 (global-hl-line-mode 1)
+
+(column-number-mode 1)
+(require 'whitespace)
+(setq whitespace-line-column 80)
+(setq whitespace-style '(face lines-tail))
+(add-hook 'prog-mode-hook 'whitespace-mode)
 
 (savehist-mode 1)
 (setq savehist-save-minibuffer-history t
