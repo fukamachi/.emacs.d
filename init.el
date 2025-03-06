@@ -120,7 +120,15 @@
   :ensure t
   :config
   (setq company-selection-default nil)
-  (setq company-minimum-prefix-length 1)
+  (setq company-minimum-prefix-length 2)
+  (setq company-selection-wrap-around t)
+  (setq company-transformers
+        '(company-sort-by-occurrence
+          company-sort-by-backend-importance))
+  (setq company-frontends
+        '(company-pseudo-tooltip-frontend
+          company-preview-frontend
+          company-echo-metadata-frontend))
 
   (defun my-company-return ()
     (interactive)
