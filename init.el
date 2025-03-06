@@ -219,3 +219,26 @@
         default-directory dir))
 
 (advice-add 'cd :override 'my-cd)
+
+(use-package recentf
+  :ensure nil
+  :init
+  (setq recentf-max-saved-items 100)
+  (recentf-mode 1))
+
+(use-package consult
+  :bind (("M-r" . consult-recent-file)))
+
+(use-package vertico
+  :init
+  (vertico-mode))
+
+(use-package orderless
+  :custom
+  (completion-styles '(orderless basic)))
+
+(use-package saveplace
+  :ensure nil
+  :init
+  (setq save-place-file (locate-user-emacs-file "places"))
+  (save-place-mode 1))
