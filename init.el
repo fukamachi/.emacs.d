@@ -157,6 +157,9 @@
   (add-to-list 'eglot-server-programs
                '((coalton-mode) . ("localhost" 7887))))
 
+(use-package markdown-mode
+  :mode (("\\.md\\'" . markdown-mode)))
+
 (fset 'yes-or-no-p 'y-or-n-p)
 
 (menu-bar-mode -1)
