@@ -200,3 +200,22 @@
 
 (define-key key-translation-map (kbd "M-:") (kbd "M-;"))
 (define-key key-translation-map (kbd "M-;") (kbd "M-:"))
+
+;;
+;; Base directory behavior
+
+(defvar *working-directory* (getenv "PWD")
+  "Initial directory")
+(setq default-directory *working-directory*)
+
+;; Don't change the `default-directory'.
+(add-hook 'find-file-hook
+          (lambda ()
+            (setq-local default-directory *working-directory*)))
+
+;; Allow to change it manually.
+(defun my-cd (dir)
+  (setq *working-directory* dir
+        default-directory dir))
+
+(advice-add 'cd :override 'my-cd)
