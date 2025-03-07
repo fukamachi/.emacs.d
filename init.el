@@ -25,6 +25,9 @@
     (kbd "M-h") 'sp-forward-barf-sexp
     (kbd "SPC o") 'sp-raise-sexp))
 
+(use-package highlight
+  :ensure t)
+
 (use-package evil
   :ensure t
   :init
@@ -36,6 +39,23 @@
   (define-key evil-motion-state-map (kbd "C-z") 'suspend-frame)
   (define-key evil-insert-state-map (kbd "C-a") 'move-beginning-of-line)
   (define-key evil-insert-state-map (kbd "C-e") 'move-end-of-line))
+
+(use-package evil-search-highlight-persist
+  :ensure t
+  :config
+  (global-evil-search-highlight-persist t)
+  (set-face-attribute 'evil-search-highlight-persist-highlight-face nil
+                      :background "cadetblue"
+                      :foreground "black")
+
+  (evil-define-command my-evil-nohighlight ()
+    "Clear both Evil's and evil-search-highlight-persist's search highlights."
+    :repeat nil
+    (interactive)
+    (evil-ex-nohighlight)
+    (evil-search-highlight-persist-remove-all))
+
+  (evil-ex-define-cmd "noh[l]" 'my-evil-nohighlight))
 
 (use-package smartparens
   :ensure t
@@ -201,25 +221,6 @@
 (define-key key-translation-map (kbd "M-:") (kbd "M-;"))
 (define-key key-translation-map (kbd "M-;") (kbd "M-:"))
 
-;;
-;; Base directory behavior
-
-(defvar *working-directory* (getenv "PWD")
-  "Initial directory")
-(setq default-directory *working-directory*)
-
-;; Don't change the `default-directory'.
-(add-hook 'find-file-hook
-          (lambda ()
-            (setq-local default-directory *working-directory*)))
-
-;; Allow to change it manually.
-(defun my-cd (dir)
-  (setq *working-directory* dir
-        default-directory dir))
-
-(advice-add 'cd :override 'my-cd)
-
 (use-package recentf
   :ensure nil
   :init
@@ -227,7 +228,9 @@
   (recentf-mode 1))
 
 (use-package consult
-  :bind (("M-r" . consult-recent-file)))
+  :bind (("M-r" . consult-recent-file))
+  :init
+  (setq completion-in-region-function 'consult-completion-in-region))
 
 (use-package vertico
   :init
