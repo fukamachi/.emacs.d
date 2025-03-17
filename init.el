@@ -134,7 +134,9 @@
   (add-hook 'slime-repl-mode-hook
             (lambda ()
               (evil-define-key 'normal slime-repl-mode-map
-                (kbd "RET") 'slime-repl-return))))
+                (kbd "RET") 'slime-repl-return)
+              (evil-define-key 'normal slime-repl-mode-map
+                (kbd "C-z") 'suspend-frame))))
 
 (use-package company
   :ensure t
