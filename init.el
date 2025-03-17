@@ -136,7 +136,9 @@
               (evil-define-key 'normal slime-repl-mode-map
                 (kbd "RET") 'slime-repl-return)
               (evil-define-key 'normal slime-repl-mode-map
-                (kbd "C-z") 'suspend-frame))))
+                (kbd "C-z") 'suspend-frame)
+              (evil-define-key 'normal slime-repl-mode-map
+                (kbd "M-r") 'consult-recent-file))))
 
 (use-package company
   :ensure t
