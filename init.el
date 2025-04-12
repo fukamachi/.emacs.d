@@ -117,7 +117,10 @@
 (use-package slime
   :commands (slime)
   :config
-  (setq inferior-lisp-program "ros -L sbcl-bin run")
+  ;;(setq inferior-lisp-program "ros run")
+  (setq slime-lisp-implementations
+        '((sbcl ("ros" "-L" "sbcl" "run") :coding-system utf-8-unix)
+          (qlot ("qlot" "exec" "ros" "-L" "sbcl" "run") :coding-system utf-8-unix)))
   (setq slime-contribs '(slime-fancy slime-company))
   (when (require 'slime-coalton nil t)
     (slime-coalton-init))
